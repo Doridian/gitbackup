@@ -1,6 +1,7 @@
 from genericpath import exists
 from os import environ, makedirs
 from subprocess import CalledProcessError, check_call, DEVNULL
+from sys import stderr
 from traceback import print_exc
 from shutil import rmtree
 
@@ -23,7 +24,8 @@ class GitBackup:
             self._pull()
             return True
         except CalledProcessError:
-            print_exc()
+            print_exc(file=stderr)
+            stderr.flush()
         return False
 
     def _pull(self) -> None:

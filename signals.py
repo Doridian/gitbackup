@@ -8,7 +8,7 @@ def stop() -> None:
     global _should_run
     _should_run = False
     _exit_event.set()
-    print("Stop sequence initiated")
+    print("Stop sequence initiated", flush=True)
 
 def safe_sleep(seconds: float) -> None:
     _exit_event.wait(seconds)
@@ -17,7 +17,7 @@ def should_run() -> bool:
     return _should_run
 
 def _sighdlr(*args):
-    print("Caught signal, stopping...")
+    print("Caught signal, stopping...", flush=True)
     stop()
 
 def register_signals() -> None:

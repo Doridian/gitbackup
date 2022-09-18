@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from sys import stderr
 from traceback import print_exc
 from typing import Union
 from github import Github, AuthenticatedUser, NamedUser, Organization, Repository, PaginatedList
@@ -48,15 +49,16 @@ class GitHubBackup(GitHost):
         id = "user:"
         if self.should_refresh(id):
             did_refresh = True
-            print("+ USER")
+            print("+ USER", flush=True)
             try:
                 u = self._client.get_user()
                 self.repos[id] = self._get_holders(u, u.get_repos(affiliation="owner"))
                 self.report_refresh(id, True)
             except Exception:
-                print_exc()
+                print_exc(file=stderr)
+                stderr.flush()
                 self.report_refresh(id, False)
-            print("- USER")
+            print("- USER", flush=True)
 
         for org in self._orgs:
             if not should_run():
@@ -67,15 +69,16 @@ class GitHubBackup(GitHost):
                 continue
 
             did_refresh = True
-            print(f"+ ORG {org}")
+            print(f"+ ORG {org}", flush=True)
             try:
                 o = self._client.get_organization(org)
                 self.repos[id] = self._get_holders(o, o.get_repos())
                 self.report_refresh(id, True)
             except Exception:
-                print_exc()
+                print_exc(file=stderr)
+                stderr.flush()
                 self.report_refresh(id, False)
-            print(f"- ORG {org}")
+            print(f"- ORG {org}", flush=True)
 
         return did_refresh
 
@@ -95,7 +98,7 @@ class GitHubBackup(GitHost):
         return did_pull
 
     def _pull_repository(self, holder: GitHubRepoHolder) -> bool:
-        print(f"+ REPO {holder.login}/{holder.repo}")
+        print(f"+ REPO {holder.login}/{holder.repo}", flush=True)
         backup = GitBackup(
             repo=f"https://github.com/{holder.login}/{holder.repo}",
             dir=f"backups/github/{holder.login}/{holder.repo}",
@@ -104,7 +107,7 @@ class GitHubBackup(GitHost):
             only_initial=holder.only_clone,
         )
         success = backup.pull()
-        print(f"- REPO {holder.login}/{holder.repo}")
+        print(f"- REPO {holder.login}/{holder.repo}", flush=True)
         return success
 
     def name(*args) -> str:

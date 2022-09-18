@@ -1,5 +1,6 @@
 from os import makedirs
 from os.path import exists
+from sys import stderr
 from traceback import print_exc
 from host import GitHost
 from pickle import dump, load
@@ -30,5 +31,6 @@ def load_host(name: str) -> GitHost:
             with open(pickle_file, "rb") as fh:
                 return load(fh)
         except Exception:
-            print_exc()
+            print_exc(file=stderr)
+            stderr.flush()
     return new_host(name)

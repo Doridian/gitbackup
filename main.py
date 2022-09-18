@@ -8,9 +8,9 @@ def main(one_shot: bool):
     for name in GIT_HOSTS:
         host = load_host(name)
         hosts.append(host)
-        print(f"# HOST {host.name()}")
+        print(f"# HOST {host.name()}", flush=True)
 
-    print(f"# HOSTS LOADED [{len(hosts)}]")
+    print(f"# HOSTS LOADED [{len(hosts)}]", flush=True)
 
     while should_run():
         was_idle = True
@@ -20,7 +20,7 @@ def main(one_shot: bool):
             did_pull = host.pull()
             if did_refresh or did_pull:
                 save_host(host)
-                print(f"# HOST {host.name()}")
+                print(f"# HOST {host.name()}", flush=True)
                 was_idle = False
 
             if not should_run():
