@@ -7,6 +7,7 @@ from itertools import chain
 
 from git import GitBackup
 from host import GitHost
+from signals import should_run
 
 @dataclass
 class GitHubRepoHolder:
@@ -58,6 +59,9 @@ class GitHubBackup(GitHost):
             print("- USER")
 
         for org in self._orgs:
+            if not should_run():
+                break
+
             id = f"org:{org}"
             if not self.should_refresh(id):
                 continue
@@ -78,6 +82,9 @@ class GitHubBackup(GitHost):
     def pull(self):
         did_pull = False
         for repo in chain(*self.repos.values()):
+            if not should_run():
+                break
+
             if not self.should_pull(repo.url):
                 continue
             did_pull = True
