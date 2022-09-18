@@ -8,7 +8,7 @@ def main(one_shot: bool):
     for name in GIT_HOSTS:
         host = load_host(name)
         hosts.append(host)
-        print(f"# HOST {host.name()}", flush=True)
+        print(f"# HOST LOADED [{host.name()}]", flush=True)
 
     print(f"# HOSTS LOADED [{len(hosts)}]", flush=True)
 
