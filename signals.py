@@ -1,4 +1,5 @@
-from signal import signal, SIGINT, SIGTERM
+from os import getpid, waitpid
+from signal import SIGCHLD, signal, SIGINT, SIGTERM
 from threading import Event
 
 _should_run = True
@@ -20,6 +21,13 @@ def _sighdlr(*args):
     print("Caught signal, stopping...", flush=True)
     stop()
 
+def _sigchld(*args):
+    waitpid()
+
 def register_signals() -> None:
     signal(SIGINT, _sighdlr)
     signal(SIGTERM, _sighdlr)
+
+    if getpid() == 1:
+        print("We are init, register SIGCHLD...", flush=True)
+        signal(SIGCHLD, _sigchld)
