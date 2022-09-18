@@ -1,4 +1,4 @@
-from os import getpid, waitpid
+from os import WNOHANG, getpid, waitpid
 from signal import SIGCHLD, signal, SIGINT, SIGTERM
 from threading import Event
 
@@ -22,7 +22,7 @@ def _sighdlr(*args):
     stop()
 
 def _sigchld(*args):
-    waitpid()
+    waitpid(-1, WNOHANG)
 
 def register_signals() -> None:
     signal(SIGINT, _sighdlr)
