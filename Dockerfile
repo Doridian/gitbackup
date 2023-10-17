@@ -1,7 +1,7 @@
 FROM alpine
 
 ENV GITHUB_TOKEN=
-ENV GITHUB_ORGANIZATIONS=foxCaves,FoxDenHome,FoxelBox,MoonHack,PawNode,SpaceAgeMP,WSVPN
+ENV GITHUB_ORGANIZATIONS=foxCaves,FoxDenHome,FoxBukkit,MoonHack,PawNode,SpaceAgeMP,WSVPN
 
 RUN mkdir -p /app
 WORKDIR /app
