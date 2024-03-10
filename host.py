@@ -63,11 +63,11 @@ class GitHost(ABC):
         self._reload()
 
     @abstractmethod
-    def refresh(self) -> bool:
+    def refresh(self, force: bool = False) -> bool:
         pass
 
     @abstractmethod
-    def pull(self) -> bool:
+    def pull(self, force: bool = False) -> bool:
         pass
     
     @staticmethod

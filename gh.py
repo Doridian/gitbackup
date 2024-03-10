@@ -43,11 +43,11 @@ class GitHubBackup(GitHost):
             only_clone=repo.archived,
         ) for repo in repos]
 
-    def refresh(self) -> bool:
+    def refresh(self, force: bool = False) -> bool:
         did_refresh = False
 
         id = "user:"
-        if self.should_refresh(id):
+        if force or self.should_refresh(id):
             did_refresh = True
             print("+ USER", flush=True)
             try:
@@ -65,7 +65,7 @@ class GitHubBackup(GitHost):
                 break
 
             id = f"org:{org}"
-            if not self.should_refresh(id):
+            if not force and not self.should_refresh(id):
                 continue
 
             did_refresh = True
@@ -82,13 +82,13 @@ class GitHubBackup(GitHost):
 
         return did_refresh
 
-    def pull(self):
+    def pull(self, force: bool = False):
         did_pull = False
         for repo in chain(*self.repos.values()):
             if not should_run():
                 break
 
-            if not self.should_pull(repo.url):
+            if not force and not self.should_pull(repo.url):
                 continue
             did_pull = True
 

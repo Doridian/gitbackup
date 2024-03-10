@@ -16,8 +16,8 @@ def main(one_shot: bool):
         was_idle = True
 
         for host in hosts:
-            did_refresh = host.refresh()
-            did_pull = host.pull()
+            did_refresh = host.refresh(force=one_shot)
+            did_pull = host.pull(force=one_shot)
             if did_refresh or did_pull:
                 save_host(host)
                 print(f"# HOST {host.name()}", flush=True)
@@ -31,3 +31,6 @@ def main(one_shot: bool):
 
         if was_idle:
             safe_sleep(1)
+
+if __name__ == "__main__":
+    main(one_shot=True)
