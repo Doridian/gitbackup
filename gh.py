@@ -88,6 +88,7 @@ class GitHubBackup(GitHost):
         for id in list(self.repos.keys()):
             if id not in known_repos:
                 del self.repos[id]
+                did_refresh = True
 
         return did_refresh
 
