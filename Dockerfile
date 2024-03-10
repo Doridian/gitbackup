@@ -7,7 +7,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 
-RUN apk --no-cache add python3 py3-cffi py3-pip git && pip3 install -r requirements.txt
+RUN apk --no-cache add python3 py3-cffi py3-pip git && pip3 install --break-system-packages -r requirements.txt
 
 COPY . /app
 
