@@ -31,6 +31,3 @@ def main(one_shot: bool):
 
         if was_idle:
             safe_sleep(1)
-
-if __name__ == "__main__":
-    main(one_shot=True)
