@@ -46,7 +46,10 @@ class GitHubBackup(GitHost):
     def refresh(self, force: bool = False) -> bool:
         did_refresh = False
 
+        known_repos: set[str] = {}
+
         id = "user:"
+        known_repos.add(id)
         if force or self.should_refresh(id):
             did_refresh = True
             print("+ USER", flush=True)
@@ -61,10 +64,12 @@ class GitHubBackup(GitHost):
             print("- USER", flush=True)
 
         for org in self._orgs:
-            if not should_run():
-                break
-
             id = f"org:{org}"
+            known_repos.add(id)
+
+            if not should_run():
+                return did_refresh
+
             if not force and not self.should_refresh(id):
                 continue
 
@@ -79,6 +84,10 @@ class GitHubBackup(GitHost):
                 stderr.flush()
                 self.report_refresh(id, False)
             print(f"- ORG {org}", flush=True)
+
+        for id in list(self.repos.keys()):
+            if id not in known_repos:
+                del self.repos[id]
 
         return did_refresh
 
