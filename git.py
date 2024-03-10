@@ -1,6 +1,6 @@
 from genericpath import exists
 from os import environ, makedirs
-from subprocess import CalledProcessError, check_call, DEVNULL
+from subprocess import CalledProcessError, check_call
 from sys import stderr
 from traceback import print_exc
 from shutil import rmtree
@@ -38,11 +38,11 @@ class GitBackup:
         if exists(clone_ok_file):
             if self.only_clone:
                 return
-            check_call(git_cmd + ["fetch", "--all"], cwd=self.dir, env=git_env, stdout=DEVNULL, stderr=DEVNULL)
+            check_call(git_cmd + ["fetch", "-q", "--all"], cwd=self.dir, env=git_env)
             return
 
         rmtree(self.dir, ignore_errors=True)
         makedirs(self.dir, exist_ok=True)
-        check_call(git_cmd + ["clone", "--mirror", self.repo, "."], cwd=self.dir, env=git_env, stdout=DEVNULL, stderr=DEVNULL)
+        check_call(git_cmd + ["clone", "-q", "--mirror", self.repo, "."], cwd=self.dir, env=git_env)
         with open(clone_ok_file, "w") as fh:
             fh.write("Initial clone OK. Do not delete or edit this file!")
