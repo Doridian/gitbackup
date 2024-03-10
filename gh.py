@@ -46,7 +46,7 @@ class GitHubBackup(GitHost):
     def refresh(self, force: bool = False) -> bool:
         did_refresh = False
 
-        known_repos: set[str] = {}
+        known_repos: set[str] = set()
 
         id = "user:"
         known_repos.add(id)
