@@ -3,7 +3,7 @@ from gitbackup.host_loader import load_host, save_host
 from gitbackup.config import GIT_HOSTS
 from gitbackup.signals import safe_sleep, should_run
 
-def main(one_shot: bool):
+def main(force_refresh: bool, one_shot: bool) -> None:
     hosts: list[GitHost] = []
     for name in GIT_HOSTS:
         host = load_host(name)
@@ -16,8 +16,8 @@ def main(one_shot: bool):
         was_idle = True
 
         for host in hosts:
-            did_refresh = host.refresh(force=one_shot)
-            did_pull = host.pull(force=one_shot)
+            did_refresh = host.refresh(force=force_refresh)
+            did_pull = host.pull(force=force_refresh)
             if did_refresh or did_pull:
                 save_host(host)
                 print(f"# HOST {host.name()}", flush=True)
