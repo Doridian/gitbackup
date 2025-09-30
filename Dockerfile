@@ -14,4 +14,4 @@ COPY . /app
 RUN mkdir -p /app/backups
 VOLUME /app/backups
 
-ENTRYPOINT [ "python3", "src/loop.py" ]
+ENTRYPOINT [ "python3", "gitbackup/loop.py" ]
