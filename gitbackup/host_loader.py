@@ -1,12 +1,11 @@
-from os import makedirs, getenv
+from os import makedirs
 from os.path import exists, join
 from sys import stderr
 from traceback import print_exc
 from gitbackup.host import GitHost
 from pickle import dump, load
 from gitbackup.gh import GitHubBackup
-
-HOST_BACKUP_DIR = getenv("BACKUP_ROOT", "./backups")
+from gitbackup.config import HOST_BACKUP_DIR
 
 _host_registry = {}
 def _register_host(host_type: type[GitHost]) -> None:

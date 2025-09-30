@@ -5,6 +5,7 @@ from typing import Union
 from github import Github, AuthenticatedUser, NamedUser, Organization, Repository, PaginatedList
 from os import environ
 from itertools import chain
+from gitbackup.config import HOST_BACKUP_DIR
 
 from gitbackup.git import GitBackup
 from gitbackup.host import GitHost
@@ -111,7 +112,7 @@ class GitHubBackup(GitHost):
         print(f"+ REPO {holder.login}/{holder.repo}", flush=True)
         backup = GitBackup(
             repo=f"https://github.com/{holder.login}/{holder.repo}",
-            dir=f"backups/github/{holder.login}/{holder.repo}",
+            dir=f"{HOST_BACKUP_DIR}/github/{holder.login}/{holder.repo}",
             username="pat",
             password=self._token,
             only_initial=holder.only_clone,
