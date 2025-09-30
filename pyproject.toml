@@ -17,4 +17,5 @@ packages = ["gitbackup"]
 
 [project.scripts]
 gitbackup-single = "gitbackup.single:main"
+gitbackup-oneshot = "gitbackup.oneshot:main"
 gitbackup-loop = "gitbackup.loop:main"
