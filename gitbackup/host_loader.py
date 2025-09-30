@@ -1,10 +1,12 @@
-from os import makedirs
-from os.path import exists
+from os import makedirs, getenv
+from os.path import exists, join
 from sys import stderr
 from traceback import print_exc
 from gitbackup.host import GitHost
 from pickle import dump, load
 from gitbackup.gh import GitHubBackup
+
+HOST_BACKUP_DIR = getenv("BACKUP_ROOT", "./backups")
 
 _host_registry = {}
 def _register_host(host_type: type[GitHost]) -> None:
@@ -12,9 +14,9 @@ def _register_host(host_type: type[GitHost]) -> None:
 _register_host(GitHubBackup)
 
 def _host_pickle_file(name: str) -> str:
-    host_dir = f"backups/{name}"
+    host_dir = join(HOST_BACKUP_DIR, name)
     makedirs(host_dir, exist_ok=True)
-    return f"{host_dir}/state.pickle"
+    return join(host_dir, "state.pickle")
 
 def new_host(name: str) -> GitHost:
     return _host_registry[name]()
