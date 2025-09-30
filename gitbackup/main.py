@@ -1,7 +1,7 @@
-from host import GitHost
-from host_loader import load_host, save_host
-from config import GIT_HOSTS
-from signals import safe_sleep, should_run
+from gitbackup.host import GitHost
+from gitbackup.host_loader import load_host, save_host
+from gitbackup.config import GIT_HOSTS
+from gitbackup.signals import safe_sleep, should_run
 
 def main(one_shot: bool):
     hosts: list[GitHost] = []

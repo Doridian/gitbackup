@@ -2,9 +2,9 @@ from os import makedirs
 from os.path import exists
 from sys import stderr
 from traceback import print_exc
-from host import GitHost
+from gitbackup.host import GitHost
 from pickle import dump, load
-from gh import GitHubBackup
+from gitbackup.gh import GitHubBackup
 
 _host_registry = {}
 def _register_host(host_type: type[GitHost]) -> None:

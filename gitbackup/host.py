@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-from config import REFRESH_TIME_OK, REFRESH_TIME_FAIL, PULL_TIME_OK, PULL_TIME_FAIL
+from gitbackup.config import REFRESH_TIME_OK, REFRESH_TIME_FAIL, PULL_TIME_OK, PULL_TIME_FAIL
 
 class GitHost(ABC):
     next_pulls: dict[str, datetime]

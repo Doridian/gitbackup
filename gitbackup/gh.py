@@ -6,9 +6,9 @@ from github import Github, AuthenticatedUser, NamedUser, Organization, Repositor
 from os import environ
 from itertools import chain
 
-from git import GitBackup
-from host import GitHost
-from signals import should_run
+from gitbackup.git import GitBackup
+from gitbackup.host import GitHost
+from gitbackup.signals import should_run
 
 @dataclass
 class GitHubRepoHolder:

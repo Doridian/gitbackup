@@ -1,0 +1,17 @@
+[project]
+name = "gitbackup"
+version = "0.1.0"
+description = "Git backup tool"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pygithub>=2.8.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+gitbackup-single = "gitbackup.single:main"
+gitbackup-loop = "gitbackup.loop:main"
