@@ -41,13 +41,16 @@
                 overlay
               ]
             );
+
+        package = mkApplication {
+          venv = pythonSet.mkVirtualEnv "gitbackup" workspace.deps.default;
+          package = pythonSet.gitbackup;
+        };
       in
       {
         packages = {
-          default = mkApplication {
-            venv = pythonSet.mkVirtualEnv "gitbackup" workspace.deps.default;
-            package = pythonSet.gitbackup;
-          };
+          default = package;
+          gitbackup = package;
         };
       });
 }
